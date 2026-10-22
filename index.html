@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Réservez votre chauffeur privé avec Noctis VTC.">
+  <title>Noctis VTC — Chauffeur privé</title>
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230b0e14'/%3E%3Ctext x='50' y='70' font-family='serif' font-size='58' font-weight='700' text-anchor='middle' fill='%23d4b15b'%3EN%3C/text%3E%3C/svg%3E">
+  <meta name="theme-color" content="#0b0e14">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/css/app.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="topbar">
+  <a class="brand" href="#accueil">
+    NOCTIS <span>VTC</span>
+    <small>CHAUFFEUR PRIVÉ, À TOUTE HEURE</small>
+  </a>
+
+  <nav aria-label="Navigation principale">
+    <a href="#trajet">Trajet</a>
+    <a href="#reservation">Réservation</a>
+    <a href="#avis">Avis</a>
+    <a href="#engagements">Services</a>
+    <a href="auth.html">Mon compte</a>
+  </nav>
+
+  <button id="themeToggle" class="btn ghost theme-toggle" type="button"
+          aria-label="Activer le thème clair" title="Changer le thème">
+    ☼ <span>Thème clair</span>
+  </button>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="accueil">
+    <div>
+      <p class="eyebrow">SERVICE DE CHAUFFEUR PRIVÉ</p>
+      <h1>Votre trajet,<br><em>sans un mot de trop.</em></h1>
+      <p>Un service discret, confortable et fiable. Estimez votre trajet puis envoyez votre demande de réservation.</p>
+      <a class="btn" href="#trajet">Calculer mon trajet <span>↗</span></a>
+      <div class="trust">
+        <span>✦ Prix estimé avant réservation</span>
+        <span>✦ Berline, van ou premium</span>
+      </div>
+    </div>
+
+    <div class="hero-art">
+      <div class="orbit"></div>
+      <div class="car" aria-hidden="true">
+        <svg viewBox="0 0 260 130" role="img" aria-label="Illustration d’une berline" xmlns="http://www.w3.org/2000/svg">
+          <path d="M35 83 49 55c4-8 11-13 21-15l30-6h45l31 9c8 2 14 7 19 15l13 25 14 7v15H22V91z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+          <path d="m63 56 12-8 30-6h38l25 8 9 15H55z" fill="currentColor" opacity=".15"/>
+          <path d="M63 56 75 48l30-6h38l25 8 9 15H55z" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M31 84h27m130 0h24M108 43v22" stroke="currentColor" stroke-width="2"/>
+          <circle cx="64" cy="101" r="13" fill="#0b0e14" stroke="currentColor" stroke-width="3"/>
+          <circle cx="64" cy="101" r="5" fill="currentColor"/>
+          <circle cx="184" cy="101" r="13" fill="#0b0e14" stroke="currentColor" stroke-width="3"/>
+          <circle cx="184" cy="101" r="5" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="art-label">NOCTIS / 24—7</div>
+    </div>
+  </section>
+
+  <!-- ============ 01 / TRAJET ============ -->
+  <section class="section" id="trajet">
+    <div class="section-heading">
+      <p class="eyebrow">01 / VOTRE ITINÉRAIRE</p>
+      <h2>Préparons votre trajet.</h2>
+      <p>Choisissez vos adresses dans les suggestions pour obtenir une estimation.</p>
+    </div>
+
+    <div class="panel">
+      <form id="rideForm" novalidate>
+        <div class="form-grid">
+          <label>
+            Adresse de départ
+            <div class="input-wrap">
+              <input id="depart" name="depart" placeholder="Ex. Gare de Lyon, Paris" required autocomplete="off" aria-autocomplete="list" aria-controls="departSuggestions">
+              <div id="departSuggestions" class="suggestions" role="listbox" aria-label="Suggestions d’adresse de départ"></div>
+            </div>
+          </label>
+
+          <label>
+            Adresse d'arrivée
+            <div class="input-wrap">
+              <input id="arrivee" name="arrivee" placeholder="Ex. Aéroport Paris-Orly" required autocomplete="off" aria-autocomplete="list" aria-controls="arriveeSuggestions">
+              <div id="arriveeSuggestions" class="suggestions" role="listbox" aria-label="Suggestions d’adresse d’arrivée"></div>
+            </div>
+          </label>
+
+          <label>Date
+            <input id="date" name="date" type="date" required>
+          </label>
+
+          <label>Heure
+            <input id="heure" name="heure" type="time" required>
+          </label>
+
+          <label>Véhicule
+            <select id="vehicule" name="vehicule">
+              <option value="berline">Berline — confort standard</option>
+              <option value="van">Van — jusqu'à 6 passagers</option>
+              <option value="premium">Premium — haut de gamme</option>
+            </select>
+          </label>
+
+          <label>Passagers
+            <input id="passagers" name="passagers" type="number" min="1" max="6" value="1" required>
+          </label>
+        </div>
+
+        <div class="map-tools">
+          <button class="btn ghost" type="button" id="locate">◎ Ma position</button>
+          <button class="btn ghost" type="button" id="swap">↕ Inverser</button>
+          <span id="status" role="status" aria-live="polite"></span>
+        </div>
+
+        <div id="map" role="application"
+             aria-label="Carte interactive pour choisir les points de départ et d’arrivée"></div>
+
+        <button class="btn" type="submit" id="calculate">
+          Calculer le prix estimé <span>→</span>
+        </button>
+      </form>
+
+      <div id="priceResult" class="price-result" hidden>
+        <p class="eyebrow">ESTIMATION DU TRAJET</p>
+        <div class="price-top">
+          <div><small>Distance estimée</small><strong id="distance">—</strong></div>
+          <div><small>Durée estimée</small><strong id="duration">—</strong></div>
+          <div><small>Prix estimé</small><strong id="price">—</strong></div>
+        </div>
+        <p class="muted">Estimation indicative, calculée à partir de la distance routière disponible. Le serveur doit confirmer le tarif définitif.</p>
+        <button type="button" class="btn" id="showBooking">Continuer vers la réservation →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 / RÉSERVATION ============ -->
+  <section class="section" id="reservation">
+    <div class="section-heading">
+      <p class="eyebrow">02 / CONFIRMATION</p>
+      <h2>Votre demande de réservation.</h2>
+      <p>Les informations sont envoyées de manière sécurisée pour être enregistrées.</p>
+    </div>
+
+    <div class="panel">
+      <form id="bookingForm">
+        <div class="form-grid">
+          <label>Prénom<input name="prenom" required maxlength="100"></label>
+          <label>Nom<input name="nom" required maxlength="100"></label>
+          <label>E-mail<input name="email" type="email" required maxlength="190"></label>
+          <label>Téléphone<input name="telephone" type="tel" required maxlength="30"></label>
+          <label class="wide">Note pour le chauffeur (facultatif)<textarea name="note" rows="3" maxlength="1000"></textarea></label>
+        </div>
+
+        <label class="check">
+          <input type="checkbox" required>
+          J'accepte que mes informations soient utilisées pour traiter ma demande.
+        </label>
+
+        <button class="btn" type="submit">Envoyer la demande <span>→</span></button>
+        <p id="bookingMessage" role="status" aria-live="polite" class="status"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ 03 / AVIS ============ -->
+  <section class="section" id="avis">
+    <div class="section-heading">
+      <p class="eyebrow">03 / VOTRE EXPÉRIENCE</p>
+      <h2>Les avis des passagers.</h2>
+      <p>Votre retour aide à améliorer le service.</p>
+    </div>
+
+    <div class="reviews-layout">
+      <form class="panel" id="reviewForm">
+        <h3>Laisser un avis</h3>
+        <label>Votre nom<input name="nom" required maxlength="100"></label>
+        <label>Votre note
+          <select name="note" required>
+            <option value="5">★★★★★ — Excellent</option>
+            <option value="4">★★★★☆ — Très bien</option>
+            <option value="3">★★★☆☆ — Bien</option>
+            <option value="2">★★☆☆☆ — Moyen</option>
+            <option value="1">★☆☆☆☆ — Décevant</option>
+          </select>
+        </label>
+        <label>Votre commentaire<textarea name="commentaire" rows="4" required maxlength="2000"></textarea></label>
+        <button class="btn" type="submit">Publier l'avis</button>
+        <p id="reviewMessage" role="status" aria-live="polite"></p>
+      </form>
+
+      <div>
+        <div class="rating-summary">
+          <strong id="average">—</strong>
+          <span>★ moyenne des avis</span>
+          <small id="reviewCount">Chargement des avis…</small>
+        </div>
+        <div id="reviewList" class="review-list" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 / SERVICES ============ -->
+  <section class="section benefits" id="engagements">
+    <div class="section-heading">
+      <p class="eyebrow">04 / L’EXPÉRIENCE NOCTIS</p>
+      <h2>Le confort, sans complication.</h2>
+      <p>Une réservation claire, des informations utiles et un service pensé autour de votre trajet.</p>
+    </div>
+
+    <div class="benefit-grid">
+      <article class="benefit-card">
+        <span class="benefit-icon">↗</span>
+        <h3>Un prix annoncé</h3>
+        <p>Obtenez une estimation avant d’envoyer votre demande. Le tarif définitif reste à confirmer.</p>
+      </article>
+      <article class="benefit-card">
+        <span class="benefit-icon">◷</span>
+        <h3>Votre horaire</h3>
+        <p>Indiquez la date, l’heure et le nombre de passagers pour préparer votre trajet.</p>
+      </article>
+      <article class="benefit-card">
+        <span class="benefit-icon">◇</span>
+        <h3>Votre confort</h3>
+        <p>Choisissez la catégorie de véhicule qui correspond à vos besoins.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ 05 / FAQ ============ -->
+  <section class="section faq" id="questions">
+    <div class="section-heading">
+      <p class="eyebrow">05 / QUESTIONS FRÉQUENTES</p>
+      <h2>Avant de réserver.</h2>
+    </div>
+
+    <details>
+      <summary>Le prix affiché est-il définitif ?</summary>
+      <p>Non. Il s’agit d’une estimation indicative. Le tarif final doit être confirmé par le service avant le trajet.</p>
+    </details>
+    <details>
+      <summary>Comment ma demande est-elle enregistrée ?</summary>
+      <p>Le formulaire transmet les informations de manière sécurisée à notre base de données distante hébergée chez Supabase.</p>
+    </details>
+    <details>
+      <summary>Pourquoi dois-je sélectionner une adresse suggérée ?</summary>
+      <p>La sélection permet de récupérer des coordonnées géographiques pour afficher le trajet et calculer une estimation plus cohérente.</p>
+    </details>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <a class="brand" href="#accueil">NOCTIS <span>VTC</span></a>
+  <p>© <span id="year"></span> Noctis VTC · Chauffeur privé, à toute heure.</p>
+  <small>© Noctis VTC — Tous droits réservés.</small>
+</footer>
+
+<!-- ============ SCRIPTS ============ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

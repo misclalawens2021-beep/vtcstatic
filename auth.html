@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Connectez-vous à votre espace client Noctis VTC.">
+  <title>Connexion | Noctis VTC</title>
+  <link rel="stylesheet" href="assets/css/app.css">
+  <link rel="stylesheet" href="assets/css/auth.css">
+</head>
+<body class="auth-page">
+  <header class="topbar auth-topbar">
+    <a class="brand" href="index.html">NOCTIS <span>VTC</span><small>CHAUFFEUR PRIVÉ, À TOUTE HEURE</small></a>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button id="themeToggle" class="btn ghost theme-toggle" type="button"
+              aria-label="Activer le thème clair" title="Changer le thème">
+        ☼ <span>Thème clair</span>
+      </button>
+      <a class="btn ghost" href="index.html">← Retour au site</a>
+    </div>
+  </header>
+
+  <main class="auth-layout">
+    <section class="auth-intro">
+      <p class="eyebrow">VOTRE ESPACE PERSONNEL</p>
+      <h1>Le voyage commence<br><em>en toute simplicité.</em></h1>
+      <p>Connectez-vous pour retrouver votre espace client Noctis VTC.</p>
+      <div class="auth-perks">
+        <div><span>01</span><p><strong>Un espace sécurisé</strong><br>Votre compte personnel</p></div>
+        <div><span>02</span><p><strong>Vos informations</strong><br>Un profil pour vos demandes</p></div>
+        <div><span>03</span><p><strong>Un service discret</strong><br>Une expérience pensée pour vous</p></div>
+      </div>
+    </section>
+
+    <section class="auth-card panel" aria-label="Authentification">
+      <div class="auth-tabs" role="tablist" aria-label="Choisir une action">
+        <button type="button" class="auth-tab active" id="loginTab" role="tab" aria-selected="true" aria-controls="loginPanel">Connexion</button>
+        <button type="button" class="auth-tab" id="registerTab" role="tab" aria-selected="false" aria-controls="registerPanel">Créer un compte</button>
+      </div>
+
+      <div id="loginPanel" role="tabpanel" aria-labelledby="loginTab">
+        <p class="eyebrow">BON RETOUR</p>
+        <h2>Ravi de vous revoir.</h2>
+        <p class="auth-muted">Saisissez vos identifiants pour continuer.</p>
+        <form id="loginForm" class="auth-form">
+          <label for="loginEmail">Adresse e-mail</label>
+          <input id="loginEmail" name="email" type="email" autocomplete="email" placeholder="vous@exemple.fr" required maxlength="190">
+          <label for="loginPassword">Mot de passe</label>
+          <div class="password-field">
+            <input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Votre mot de passe" required>
+            <button class="show-password" type="button" data-toggle-password="loginPassword" aria-label="Afficher le mot de passe">Afficher</button>
+          </div>
+          <button class="btn auth-submit" type="submit">Se connecter <span>→</span></button>
+          <p class="auth-message" id="loginMessage" role="status" aria-live="polite"></p>
+        </form>
+        <p class="auth-switch">Pas encore de compte ? <button type="button" data-switch="register">Créer un compte</button></p>
+      </div>
+
+      <div id="registerPanel" role="tabpanel" aria-labelledby="registerTab" hidden>
+        <p class="eyebrow">REJOIGNEZ NOCTIS</p>
+        <h2>Créer votre compte.</h2>
+        <p class="auth-muted">Quelques informations suffisent pour commencer.</p>
+        <form id="registerForm" class="auth-form" novalidate>
+          <div class="auth-name-grid">
+            <div><label for="firstName">Prénom</label><input id="firstName" name="prenom" autocomplete="given-name" required maxlength="100"></div>
+            <div><label for="lastName">Nom</label><input id="lastName" name="nom" autocomplete="family-name" required maxlength="100"></div>
+          </div>
+          <label for="registerEmail">Adresse e-mail</label>
+          <input id="registerEmail" name="email" type="email" autocomplete="email" placeholder="vous@exemple.fr" required maxlength="190">
+          <label for="phone">Téléphone <span class="optional">(facultatif)</span></label>
+          <input id="phone" name="telephone" type="tel" autocomplete="tel" placeholder="+33 6 00 00 00 00" maxlength="30">
+          <label for="registerPassword">Mot de passe</label>
+          <div class="password-field">
+            <input id="registerPassword" name="password" type="password" autocomplete="new-password" minlength="10" required>
+            <button class="show-password" type="button" data-toggle-password="registerPassword" aria-label="Afficher le mot de passe">Afficher</button>
+          </div>
+          <div class="password-meter" id="passwordMeter" hidden aria-live="polite">
+            <div class="password-meter-bar"><span></span></div>
+            <span class="password-meter-label">—</span>
+          </div>
+          <p class="password-hint">10 caractères minimum. Choisissez un mot de passe difficile à deviner.</p>
+          <label for="confirmPassword">Confirmer le mot de passe</label>
+          <input id="confirmPassword" name="confirmation" type="password" autocomplete="new-password" minlength="10" required>
+          <label class="auth-consent"><input id="consent" type="checkbox" required> <span>Je confirme que les informations saisies sont exactes.</span></label>
+          <button class="btn auth-submit" type="submit">Créer mon compte <span>→</span></button>
+          <p class="auth-message" id="registerMessage" role="status" aria-live="polite"></p>
+        </form>
+        <p class="auth-switch">Vous avez déjà un compte ? <button type="button" data-switch="login">Se connecter</button></p>
+      </div>
+
+      <p class="auth-footnote">Ne partagez jamais votre mot de passe. Vos données sont stockées de manière sécurisée chez notre hébergeur Supabase.</p>
+    </section>
+  </main>
+
+  <footer class="auth-footer">© <span id="year"></span> Noctis VTC · <a href="index.html">Accueil</a></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/auth.js" defer></script>
+</body>
+</html>

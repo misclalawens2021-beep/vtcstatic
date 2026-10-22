@@ -1,0 +1,66 @@
+/* Page d'authentification Noctis VTC */
+.auth-page { min-height:100vh; display:flex; flex-direction:column; }
+.auth-topbar { position:relative; }
+.auth-layout { width:min(1120px,100%); margin:auto; padding:65px 28px 50px; display:grid; grid-template-columns:1fr minmax(360px,470px); align-items:center; gap:clamp(40px,7vw,100px); flex:1; }
+.auth-intro h1 { font:500 clamp(40px,5.5vw,68px)/1.1 'Playfair Display',serif; letter-spacing:-.04em; margin:18px 0; }
+.auth-intro h1 em { color:var(--gold2); }
+.auth-intro>p:not(.eyebrow) { max-width:440px; color:var(--muted); }
+.auth-perks { margin-top:42px; display:grid; gap:20px; }
+.auth-perks>div { display:flex; align-items:center; gap:16px; }
+.auth-perks>div>span { display:grid; place-items:center; flex:0 0 42px; height:42px; border:1px solid #d4b15b66; border-radius:13px; color:var(--gold2); font-size:12px; letter-spacing:.08em; }
+.auth-perks p { margin:0; color:var(--muted); font-size:13px; line-height:1.6; }
+.auth-perks strong { color:var(--text); font-size:14px; }
+.auth-card { padding:30px; }
+.auth-tabs { display:grid; grid-template-columns:1fr 1fr; padding:4px; background:#090c12; border:1px solid var(--line); border-radius:12px; gap:4px; margin-bottom:28px; }
+.auth-tab { padding:11px 8px; color:var(--muted); background:transparent; border:0; border-radius:9px; font:600 13px 'DM Sans',sans-serif; cursor:pointer; }
+.auth-tab.active { background:linear-gradient(120deg,var(--gold),var(--gold2)); color:#19160e; }
+.auth-card h2 { margin:5px 0 4px; font:500 31px/1.2 'Playfair Display',serif; }
+.auth-muted { color:var(--muted); font-size:13px; margin:8px 0 23px; }
+.auth-form { display:flex; flex-direction:column; gap:9px; }
+.auth-form label { color:#d8dbe4; font-size:12px; font-weight:600; }
+.auth-form input:not([type=checkbox]) { margin-bottom:7px; }
+.password-field { position:relative; display:flex; align-items:center; }
+.password-field input { padding-right:82px; }
+.show-password { position:absolute; right:10px; top:50%; transform:translateY(-50%); background:transparent; border:0; color:var(--gold2); font:600 11px 'DM Sans',sans-serif; cursor:pointer; padding:7px; }
+.auth-submit { width:100%; margin-top:8px; }
+.auth-name-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.auth-name-grid>div { display:flex; flex-direction:column; gap:9px; min-width:0; }
+.optional,.password-hint { color:var(--muted); font-size:11px; font-weight:400; }
+.password-hint { margin:-3px 0 3px; }
+.auth-consent { display:flex; align-items:flex-start; gap:9px; margin:5px 0; font-weight:400!important; line-height:1.5; }
+.auth-consent input { width:16px; height:16px; margin:2px 0 0; accent-color:var(--gold); flex:0 0 auto; }
+.auth-message { min-height:18px; margin:5px 0 0; font-size:12px; color:var(--muted); }
+.auth-message.error { color:#ff9292; }
+.auth-message.success { color:var(--green); }
+.auth-switch { text-align:center; color:var(--muted); font-size:12px; margin:20px 0 0; }
+.auth-switch button { border:0; padding:0; background:none; color:var(--gold2); font:600 12px 'DM Sans',sans-serif; cursor:pointer; }
+.auth-footnote { border-top:1px solid var(--line); padding-top:17px; margin:23px 0 0; color:var(--muted); font-size:10px; line-height:1.6; }
+.auth-footer { text-align:center; padding:20px; color:var(--muted); font-size:11px; border-top:1px solid var(--line); }
+.auth-footer a { color:var(--gold2); }
+
+/* Indicateur de force du mot de passe */
+.password-meter { display:flex; align-items:center; gap:10px; margin:-2px 0 6px; }
+.password-meter-bar { flex:1; height:5px; background:#1f2635; border-radius:99px; overflow:hidden; }
+.password-meter-bar span { display:block; width:0; height:100%; background:var(--gold); transition:width .2s ease, background .2s ease; }
+.password-meter-label { font-size:11px; color:var(--muted); font-weight:600; min-width:62px; text-align:right; }
+
+body.light-theme .auth-tabs { background:#f0eee8; }
+body.light-theme .auth-form label { color:var(--text); }
+body.light-theme .auth-perks strong { color:var(--text); }
+body.light-theme .password-meter-bar { background:#e3dfd4; }
+
+@media(max-width:850px) {
+  .auth-layout { grid-template-columns:1fr; max-width:560px; gap:30px; padding-top:40px; }
+  .auth-intro { text-align:center; }
+  .auth-intro>p:not(.eyebrow) { margin-left:auto; margin-right:auto; }
+  .auth-perks { display:none; }
+}
+@media(max-width:480px) {
+  .auth-layout { padding:28px 16px 35px; }
+  .auth-card { padding:21px 18px; }
+  .auth-card h2 { font-size:28px; }
+  .auth-topbar { padding:15px 16px; gap:10px; }
+  .auth-topbar .brand { font-size:14px; }
+  .auth-topbar .brand small { font-size:7px; }
+  .auth-topbar .btn { font-size:11px; padding:9px 10px; }
+}
